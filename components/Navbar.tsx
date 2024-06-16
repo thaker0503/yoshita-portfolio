@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
   return (
     <>
       <nav className="w-screen md:px-20 px-5 py-4 flex justify-between items-center bg-white shadow-md z-50 fixed">
         <div>
-          <Image src="/logo.svg" alt="logo" width={128} height={77} />
+          <Image
+            src="/logo.svg"
+            alt="logo"
+            width={128}
+            height={77}
+            className='cursor-pointer'
+            onClick={() => router.push('/')}
+          />
         </div>
         <div className="md:flex items-center gap-10 hidden ">
           <a href="/#">Home</a>
