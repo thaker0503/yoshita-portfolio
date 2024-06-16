@@ -26,23 +26,8 @@ export default function Page({ params }: { params: { id: string } }) {
                     <MdOutlineClose />
                 </a>
             </div>
-            {currentImage && <div>
-                <Image
-                    src={currentImage}
-                    alt="currentImage"
-                    layout="fill"
-                    objectFit="contain"
-                    onClick={() => setCurrentImage('')}
-                    className="fixed top-0 left-0 z-50 w-full h-full bg-black bg-opacity-90"
-                />
-                <MdOutlineClose 
-                    className="fixed top-5 right-5 text-4xl text-white cursor-pointer z-50"
-                    onClick={() => setCurrentImage('')}
-                />
-
-            </div>}
             {data.map((project) => (
-                <div key={project._id} className="mx-2 py-5 md:mx-20 md:py-10 flex flex-col gap-10">
+                <div key={project._id} className="relative mx-2 py-5 md:mx-20 md:py-10 flex flex-col gap-10">
                     {/* create a carousel using tailwindcss */}
                     <div className="h-56 sm:h-[25rem] xl:h-[35rem] 2xl:h-[50rem]">
                         <Carousel
@@ -80,6 +65,24 @@ export default function Page({ params }: { params: { id: string } }) {
                     </p>
                 </div>
             ))}
+            {currentImage && <div
+                className="fixed top-0 left-0 z-50 w-full h-screen bg-black bg-opacity-90 flex justify-center items-center"
+            >
+                <Image
+                    src={currentImage}
+                    alt="currentImage"
+                    layout="fill"
+                    objectFit="contain"
+                    onClick={() => setCurrentImage('')}
+                    // className="absolute top-0 left-0 z-50 w-full h-screen bg-black bg-opacity-90"
+                    quality={100}
+                />
+                <MdOutlineClose
+                    className="fixed top-5 right-5 text-4xl text-white cursor-pointer z-50"
+                    onClick={() => setCurrentImage('')}
+                />
+
+            </div>}
         </section >
     </>
 }
