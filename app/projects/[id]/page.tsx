@@ -10,6 +10,8 @@ import { MdOutlineClose } from "react-icons/md";
 
 export default function Page({ params }: { params: { id: string } }) {
     const [data, setData] = useState<any[]>([])
+    const [currentImage, setCurrentImage] = useState<string>('');
+
     useEffect(() => {
         getProjectById(params.id).then((res) => setData(res));
     }, [params.id]);
@@ -24,11 +26,32 @@ export default function Page({ params }: { params: { id: string } }) {
                     <MdOutlineClose />
                 </a>
             </div>
+            {currentImage && <div>
+                <Image
+                    src={currentImage}
+                    alt="currentImage"
+                    layout="fill"
+                    objectFit="contain"
+                    onClick={() => setCurrentImage('')}
+                    className="fixed top-0 left-0 z-50 w-full h-full bg-black bg-opacity-90"
+                />
+                <MdOutlineClose 
+                    className="fixed top-5 right-5 text-4xl text-white cursor-pointer z-50"
+                    onClick={() => setCurrentImage('')}
+                />
+
+            </div>}
             {data.map((project) => (
                 <div key={project._id} className="mx-2 py-5 md:mx-20 md:py-10 flex flex-col gap-10">
                     {/* create a carousel using tailwindcss */}
                     <div className="h-56 sm:h-[25rem] xl:h-[35rem] 2xl:h-[50rem]">
-                        <Carousel>
+                        <Carousel
+                            // onclick to open image in full screen
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setCurrentImage((e.target as HTMLImageElement)?.src);
+                            }}
+                        >
                             {project.carouselImages.map((image: any) => (
                                 <img key={image} src={image} alt={project.title} width={800} height={703} />
                             ))}
@@ -57,6 +80,6 @@ export default function Page({ params }: { params: { id: string } }) {
                     </p>
                 </div>
             ))}
-        </section>
+        </section >
     </>
 }
